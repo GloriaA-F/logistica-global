@@ -1,0 +1,103 @@
+{% extends 'transporte/base.html' %}
+
+{% block title %}Cargas - Logística Global{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-box-seam"></i> Lista de Cargas</h2>
+        <a href="{% url 'carga_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nueva Carga
+        </a>
+    </div>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
+<!-- Filtros -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-5">
+                    <select name="tipo" class="form-control">
+                        <option value="">Todos los tipos de carga</option>
+                        <option value="FRAGIL" {% if request.GET.tipo == 'FRAGIL' %}selected{% endif %}>Frágil</option>
+                        <option value="PERECEDERA" {% if request.GET.tipo == 'PERECEDERA' %}selected{% endif %}>Perecedera</option>
+                        <option value="GENERAL" {% if request.GET.tipo == 'GENERAL' %}selected{% endif %}>General</option>
+                        <option value="PELIGROSA" {% if request.GET.tipo == 'PELIGROSA' %}selected{% endif %}>Peligrosa</option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <select name="cliente" class="form-control">
+                        <option value="">Todos los clientes</option>
+                        {% for cliente in clientes %}
+                        <option value="{{ cliente.id }}" {% if request.GET.cliente == cliente.id|stringformat:"s" %}selected{% endif %}>{{ cliente.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-funnel"></i> Filtrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>    
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Peso (Kg)</th>
+                    <th>Tipo</th>
+                    <th>Valor Declarado</th>
+                    <th>Cliente</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for carga in cargas %}
+                <tr>
+                    <td>{{ carga.id }}</td>
+                    <td>{{ carga.descripcion }}</td>
+                    <td>{{ carga.peso }} kg</td>
+                    <td>
+                        {% if carga.tipo == 'FRAGIL' %}
+                            <span class="badge bg-warning">{{ carga.get_tipo_display }}</span>
+                        {% elif carga.tipo == 'PELIGROSA' %}
+                            <span class="badge bg-danger">{{ carga.get_tipo_display }}</span>
+                        {% elif carga.tipo == 'PERECEDERA' %}
+                            <span class="badge bg-info">{{ carga.get_tipo_display }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ carga.get_tipo_display }}</span>
+                        {% endif %}
+                    </td>
+                    <td>${{ carga.valor_declarado }}</td>
+                    <td>{{ carga.cliente.nombre }}</td>
+                    <td>
+                        <a href="{% url 'carga_edit' carga.id %}" class="btn btn-sm btn-warning">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'carga_delete' carga.id %}" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No hay cargas registradas</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <a href="/" class="btn btn-secondary mt-3"><i class="bi bi-arrow-left"></i> Volver al Inicio</a>
+</div>
+{% endblock %}

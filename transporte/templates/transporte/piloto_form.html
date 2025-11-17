@@ -1,0 +1,64 @@
+{% extends 'transporte/base.html' %}
+
+{% block title %}{{ titulo }} - Logística Global{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4"><i class="bi bi-person-workspace"></i> {{ titulo }}</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="{{ form.nombre.id_for_label }}" class="form-label">Nombre</label>
+                    {{ form.nombre }}
+                    {% if form.nombre.errors %}
+                        <div class="text-danger">{{ form.nombre.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.rut.id_for_label }}" class="form-label">RUT</label>
+                    {{ form.rut }}
+                    {% if form.rut.errors %}
+                        <div class="text-danger">{{ form.rut.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.licencia.id_for_label }}" class="form-label">Licencia</label>
+                    {{ form.licencia }}
+                    {% if form.licencia.errors %}
+                        <div class="text-danger">{{ form.licencia.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.horas_vuelo.id_for_label }}" class="form-label">Horas de Vuelo</label>
+                    {{ form.horas_vuelo }}
+                    {% if form.horas_vuelo.errors %}
+                        <div class="text-danger">{{ form.horas_vuelo.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.certificaciones.id_for_label }}" class="form-label">Certificaciones</label>
+                    {{ form.certificaciones }}
+                    {% if form.certificaciones.errors %}
+                        <div class="text-danger">{{ form.certificaciones.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Guardar
+                </button>
+                <a href="{% url 'pilotos_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

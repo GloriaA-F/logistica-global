@@ -1,0 +1,65 @@
+{% extends 'transporte/base.html' %}
+
+{% block title %}Pilotos - Logística Global{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-person-workspace"></i> Lista de Pilotos</h2>
+        <a href="{% url 'piloto_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nuevo Piloto
+        </a>
+    </div>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>RUT</th>
+                    <th>Licencia</th>
+                    <th>Horas de Vuelo</th>
+                    <th>Certificaciones</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for piloto in pilotos %}
+                <tr>
+                    <td>{{ piloto.id }}</td>
+                    <td>{{ piloto.nombre }}</td>
+                    <td>{{ piloto.rut }}</td>
+                    <td><span class="badge bg-primary">{{ piloto.licencia }}</span></td>
+                    <td>{{ piloto.horas_vuelo }} hrs</td>
+                    <td>{{ piloto.certificaciones }}</td>
+                    <td>
+                        <a href="{% url 'piloto_edit' piloto.id %}" class="btn btn-sm btn-warning">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'piloto_delete' piloto.id %}" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No hay pilotos registrados</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <a href="/" class="btn btn-secondary mt-3"><i class="bi bi-arrow-left"></i> Volver al Inicio</a>
+</div>
+{% endblock %}

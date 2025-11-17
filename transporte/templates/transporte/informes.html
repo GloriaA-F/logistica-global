@@ -1,0 +1,81 @@
+{% extends 'transporte/base.html' %}
+
+{% block title %}Informes - Logística Global{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4"><i class="bi bi-graph-up"></i> Informes de Carga y Rutas</h2>
+    
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> Vista protegida - Solo usuarios autenticados
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center bg-primary text-white">
+                <div class="card-body">
+                    <h1>{{ total_despachos }}</h1>
+                    <p class="mb-0">Total Despachos</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-warning text-white">
+                <div class="card-body">
+                    <h1>{{ despachos_pendientes }}</h1>
+                    <p class="mb-0">Pendientes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-info text-white">
+                <div class="card-body">
+                    <h1>{{ despachos_en_ruta }}</h1>
+                    <p class="mb-0">En Ruta</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-success text-white">
+                <div class="card-body">
+                    <h1>{{ despachos_entregados }}</h1>
+                    <p class="mb-0">Entregados</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <h3 class="mb-3">Resumen de Cargas y Rutas</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5><i class="bi bi-box-seam"></i> Cargas</h5>
+                    <h2 class="text-primary">{{ total_cargas }}</h2>
+                    <p class="text-muted">Total de cargas registradas</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5><i class="bi bi-truck"></i> Rutas Terrestres</h5>
+                    <h2 class="text-info">{{ rutas_terrestres }}</h2>
+                    <p class="text-muted">De {{ total_rutas }} rutas totales</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5><i class="bi bi-airplane"></i> Rutas Aéreas</h5>
+                    <h2 class="text-success">{{ rutas_aereas }}</h2>
+                    <p class="text-muted">De {{ total_rutas }} rutas totales</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <a href="/" class="btn btn-secondary mt-4"><i class="bi bi-arrow-left"></i> Volver al Inicio</a>
+</div>
+{% endblock %}

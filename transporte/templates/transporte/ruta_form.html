@@ -1,0 +1,65 @@
+{% extends 'transporte/base.html' %}
+
+{% block title %}{{ titulo }} - Logística Global{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4"><i class="bi bi-map"></i> {{ titulo }}</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="{{ form.origen.id_for_label }}" class="form-label">Origen</label>
+                    {{ form.origen }}
+                    {% if form.origen.errors %}
+                        <div class="text-danger">{{ form.origen.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.destino.id_for_label }}" class="form-label">Destino</label>
+                    {{ form.destino }}
+                    {% if form.destino.errors %}
+                        <div class="text-danger">{{ form.destino.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.distancia.id_for_label }}" class="form-label">Distancia (Km)</label>
+                    {{ form.distancia }}
+                    {% if form.distancia.errors %}
+                        <div class="text-danger">{{ form.distancia.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.tipo_transporte.id_for_label }}" class="form-label">Tipo de Transporte</label>
+                    {{ form.tipo_transporte }}
+                    {% if form.tipo_transporte.errors %}
+                        <div class="text-danger">{{ form.tipo_transporte.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.tiempo_estimado.id_for_label }}" class="form-label">Tiempo Estimado (HH:MM:SS)</label>
+                    {{ form.tiempo_estimado }}
+                    <small class="form-text text-muted">Formato: HH:MM:SS (ejemplo: 05:30:00)</small>
+                    {% if form.tiempo_estimado.errors %}
+                        <div class="text-danger">{{ form.tiempo_estimado.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Guardar
+                </button>
+                <a href="{% url 'rutas_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

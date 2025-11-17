@@ -1,0 +1,67 @@
+{% extends 'transporte/base.html' %}
+
+{% block title %}Aeronaves - Logística Global{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-airplane"></i> Lista de Aeronaves</h2>
+        <a href="{% url 'aeronave_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nueva Aeronave
+        </a>
+    </div>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Matrícula</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Año</th>
+                    <th>Tipo</th>
+                    <th>Capacidad (Ton)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aeronave in aeronaves %}
+                <tr>
+                    <td>{{ aeronave.id }}</td>
+                    <td><strong>{{ aeronave.matricula }}</strong></td>
+                    <td>{{ aeronave.marca }}</td>
+                    <td>{{ aeronave.modelo }}</td>
+                    <td>{{ aeronave.año }}</td>
+                    <td><span class="badge bg-success">{{ aeronave.get_tipo_display }}</span></td>
+                    <td>{{ aeronave.capacidad_carga }}</td>
+                    <td>
+                        <a href="{% url 'aeronave_edit' aeronave.id %}" class="btn btn-sm btn-warning">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'aeronave_delete' aeronave.id %}" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">No hay aeronaves registradas</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <a href="/" class="btn btn-secondary mt-3"><i class="bi bi-arrow-left"></i> Volver al Inicio</a>
+</div>
+{% endblock %}

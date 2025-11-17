@@ -1,0 +1,30 @@
+{% extends 'transporte/base.html' %}
+
+{% block title %}Confirmar Eliminación - Logística Global{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+            <h4><i class="bi bi-exclamation-triangle"></i> Confirmar Eliminación</h4>
+        </div>
+        <div class="card-body">
+            <p class="lead">¿Está seguro que desea eliminar este {{ tipo }}?</p>
+            <div class="alert alert-warning">
+                <strong>{{ object }}</strong>
+            </div>
+            <p class="text-muted">Esta acción no se puede deshacer.</p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Sí, Eliminar
+                </button>
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
