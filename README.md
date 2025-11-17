@@ -39,7 +39,7 @@ Sistema de gestión de transporte terrestre y aéreo desarrollado con Django RES
 
 1. Clonar el repositorio
 ```bash
-git clone [URL_DE_TU_REPO]
+git clone url_detu_repo
 cd logistica
 ```
 
